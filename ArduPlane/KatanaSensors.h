@@ -8,8 +8,9 @@
 class KatanaSensors
 {
 public:
-	KatanaSensors();
+	KatanaSensors(bool connect);
 	
+	void init();
 	bool update();
 	int16_t stick_xacc(){ return	_stick_xacc;	}	 ///< X acceleration (raw)
 	int16_t stick_yacc(){ return	_stick_yacc;	}	 ///< Y acceleration (raw)

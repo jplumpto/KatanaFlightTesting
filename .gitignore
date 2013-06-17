@@ -9,6 +9,10 @@
 !mavlink_msg_raw_katana.h
 !KatanaSensors.*
 !ArduPlane.*
+!defines.h
 
 #MissionPlanner
 !MissionPlanner
+!CurrentState.cs
+!Mavlink
+!MAVLinkTypes.cs

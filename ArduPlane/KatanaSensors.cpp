@@ -1,6 +1,6 @@
 #include "KatanaSensors.h"
 
-KatanaSensors::KatanaSensors()
+KatanaSensors::KatanaSensors(bool connect)
 {
 	_stick_xacc = 0;
 	_stick_yacc = 0;
@@ -25,6 +25,12 @@ KatanaSensors::KatanaSensors()
 	_rudder_pot = 0;
 
 }
+
+void KatanaSensors::init()
+{
+
+}
+
 	
 bool KatanaSensors::update()
 {
