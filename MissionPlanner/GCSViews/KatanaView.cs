@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ZedGraph;
+
+
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
@@ -68,24 +71,76 @@ namespace ArdupilotMega.GCSViews
 
     public partial class Katana : MyUserControl
     {
+        #region Graph
+        RollingPointPairList list1 = new RollingPointPairList(10 * 50);
+        RollingPointPairList list2 = new RollingPointPairList(10 * 50);
+        RollingPointPairList list3 = new RollingPointPairList(10 * 50);
+        RollingPointPairList list4 = new RollingPointPairList(10 * 50);
+        RollingPointPairList list5 = new RollingPointPairList(10 * 50);
+        RollingPointPairList list6 = new RollingPointPairList(10 * 50);
+
+        RollingPointPairList[] stickIMUList = new RollingPointPairList[6] {
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50) };
+
+        RollingPointPairList[] rudderIMUList = new RollingPointPairList[6] {
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50) };
+        RollingPointPairList[] CrossbowIMUList = new RollingPointPairList[6] {
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50) };
+        RollingPointPairList[] StringPotList = new RollingPointPairList[3] {
+            new RollingPointPairList(10 * 50), new RollingPointPairList(10 * 50),
+            new RollingPointPairList(10 * 50)};
+        object thisLock = new object();
+
+        private int tickStart = 0;
+        private ZedGraph.ZedGraphControl[] _graphList;
+        private ZedGraph.ZedGraphControl _zgPointer = null;
+        private int _currentGraphNumber = 1;
+        private bool _updateGraph = false;
+        #endregion
+
         private AhrsSerialData _crossbowConnection;
         private Mutex _AHRSMutex = new Mutex();
+        private Mutex _ManoeuvreMutex = new Mutex();
         private Thread _AHRSThread = null;
         private Thread _RecordingThread = null;
         private bool _isRecording = false;
+        private int _manoeuvreNumber = 0;
 
         public Katana()
         {
             InitializeComponent();
-            
+
+            _zgPointer = zg1;
+            _graphList = new ZedGraph.ZedGraphControl[4] { zg1, zg2, zg3, zg4 };
+
+            CreateIMUChart(zg1, "Stick IMU Raw Sensors", "Time", "Raw Data");
+            CreateIMUChart(zg2, "Rudder IMU Raw Sensors", "Time", "Raw Data");
+            CreateIMUChart(zg3, "Crossbow IMU Raw Sensors", "Time", "Raw Data");
+            CreateStringPotChart(zg4, "String Pot Raw Sensors", "Time", "Raw Data");
+        }
+
+        public struct plot
+        {
+            public string Name;
+            public RollingPointPairList PointList;
+            public Color color;
         }
 
         private void Katana_Load(object sender, EventArgs e)
         {
             cmb_Connection.Items.AddRange(ArdupilotMega.Comms.SerialPort.GetPortNames());
             _crossbowConnection = new AhrsSerialData(_AHRSMutex);
+
+            tickStart = Environment.TickCount;
         }
 
+        #region Crossbow
         private void CrossbowConnectButton_Click(object sender, EventArgs e)
         {
             if (!_crossbowConnection.IsOpen())
@@ -120,6 +175,7 @@ namespace ArdupilotMega.GCSViews
                 IsConnected(false);
             }
         }
+        #endregion
 
         #region AuxTab
         //Auxiliary
@@ -223,13 +279,15 @@ namespace ArdupilotMega.GCSViews
                 currenttime.Second.ToString("00") + ".csv";
             sw = new System.IO.StreamWriter(filename);
 
-            string format = _crossbowConnection.GetLineFormat() + ", " + MainV2.comPort.MAV.cs.KatanaFlightTestFormat();
+            string format = _crossbowConnection.GetLineFormat() + ", " + MainV2.comPort.MAV.cs.KatanaFlightTestFormat() + ", Manoeuvre Number";
             sw.WriteLine(format);
 
             while (_isRecording)
             {
                 Thread.Sleep(20);
-                string data = _crossbowConnection.GetCurrentData() + ", " + MainV2.comPort.MAV.cs.KatanaFlightTestData();
+                _ManoeuvreMutex.WaitOne();
+                string data = _crossbowConnection.GetCurrentData() + ", " + MainV2.comPort.MAV.cs.KatanaFlightTestData() + ", " + _manoeuvreNumber.ToString();
+                _ManoeuvreMutex.ReleaseMutex();
                 sw.WriteLine(data);
             }
             sw.Close();
@@ -247,7 +305,7 @@ namespace ArdupilotMega.GCSViews
                 currenttime.Second.ToString("00") + ".csv";
             sw = new System.IO.StreamWriter(filename);
 
-            string format = "Time (hh:mm:ss.mmm), " + MainV2.comPort.MAV.cs.KatanaFlightTestFormat();
+            string format = "Time (hh:mm:ss.mmm), " + MainV2.comPort.MAV.cs.KatanaFlightTestFormat() + ", Manoeuvre Number";
             sw.WriteLine(format);
 
             while (_isRecording)
@@ -256,7 +314,9 @@ namespace ArdupilotMega.GCSViews
                 currenttime = DateTime.Now;
                 string time = currenttime.Hour.ToString() + ":" + currenttime.Minute.ToString("00") + ":" + currenttime.Second.ToString("00")
                     + "." + currenttime.Millisecond.ToString("000");
-                string data = time + ", " + MainV2.comPort.MAV.cs.KatanaFlightTestData();
+                _ManoeuvreMutex.WaitOne();
+                string data = time + ", " + MainV2.comPort.MAV.cs.KatanaFlightTestData() + ", " + _manoeuvreNumber.ToString();
+                _ManoeuvreMutex.ReleaseMutex();
                 sw.WriteLine(data);
             }
             sw.Close();
@@ -266,10 +326,308 @@ namespace ArdupilotMega.GCSViews
         }
         #endregion
 
-        private void Katana_FormClosing(object sender, FormClosingEventArgs e)
+        #region Manoeuvre
+        private void ManoeuvreButton_Click(object sender, EventArgs e)
         {
-           
+            _ManoeuvreMutex.WaitOne();
+            _manoeuvreNumber++;
+            _ManoeuvreMutex.ReleaseMutex();
 
+            ManoeuvreTextBox.Text = _manoeuvreNumber.ToString();
+        }
+
+        void Manoeuvre_KeyPress(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                _ManoeuvreMutex.WaitOne();
+                _manoeuvreNumber++;
+                _ManoeuvreMutex.ReleaseMutex();
+
+                ManoeuvreTextBox.Text = _manoeuvreNumber.ToString();
+            }
+        }
+
+        #endregion
+
+        #region Graph
+        #region Create
+        public void CreateStringPotChart(ZedGraphControl zgc, string Title, string XAxis, string YAxis)
+        {
+            GraphPane myPane = zgc.GraphPane;
+
+            // Set the titles and axis labels
+            myPane.Title.Text = Title;
+            myPane.XAxis.Title.Text = XAxis;
+            myPane.YAxis.Title.Text = YAxis;
+
+            LineItem myCurve;
+
+            myCurve = myPane.AddCurve("Stick Pot 1", list1, Color.Red, SymbolType.None);
+            myCurve = myPane.AddCurve("Stick Pot 2", list2, Color.Green, SymbolType.None);
+            myCurve = myPane.AddCurve("Rudder Pot", list3, Color.SandyBrown, SymbolType.None);
+            
+
+            // Show the x axis grid
+            myPane.XAxis.MajorGrid.IsVisible = true;
+
+            myPane.XAxis.Scale.Min = 0;
+            myPane.XAxis.Scale.Max = 5;
+
+            // Make the Y axis scale red
+            myPane.YAxis.Scale.FontSpec.FontColor = Color.Red;
+            myPane.YAxis.Title.FontSpec.FontColor = Color.Red;
+            // turn off the opposite tics so the Y tics don't show up on the Y2 axis
+            myPane.YAxis.MajorTic.IsOpposite = false;
+            myPane.YAxis.MinorTic.IsOpposite = false;
+            // Don't display the Y zero line
+            myPane.YAxis.MajorGrid.IsZeroLine = true;
+            // Align the Y axis labels so they are flush to the axis
+            myPane.YAxis.Scale.Align = AlignP.Inside;
+            // Manually set the axis range
+            //myPane.YAxis.Scale.Min = -1;
+            //myPane.YAxis.Scale.Max = 1;
+
+            // Fill the axis background with a gradient
+            myPane.Chart.Fill = new Fill(Color.White, Color.LightGray, 45.0f);
+
+            // Calculate the Axis Scale Ranges
+            zgc.AxisChange();
+
+        }
+
+        public void CreateIMUChart(ZedGraphControl zgc, string Title, string XAxis, string YAxis)
+        {
+            GraphPane myPane = zgc.GraphPane;
+
+            // Set the titles and axis labels
+            myPane.Title.Text = Title;
+            myPane.XAxis.Title.Text = XAxis;
+            myPane.YAxis.Title.Text = YAxis;
+
+            LineItem myCurve;
+
+            myCurve = myPane.AddCurve("Accel X", list1, Color.Red, SymbolType.None);
+            myCurve = myPane.AddCurve("Accel Y", list2, Color.Green, SymbolType.None);
+            myCurve = myPane.AddCurve("Accel Z", list3, Color.SandyBrown, SymbolType.None);
+            myCurve = myPane.AddCurve("Gyro X", list4, Color.Blue, SymbolType.None);
+            myCurve = myPane.AddCurve("Gyro Y", list5, Color.Black, SymbolType.None);
+            myCurve = myPane.AddCurve("Gyro Z", list6, Color.Violet, SymbolType.None);
+
+
+            // Show the x axis grid
+            myPane.XAxis.MajorGrid.IsVisible = true;
+
+            myPane.XAxis.Scale.Min = 0;
+            myPane.XAxis.Scale.Max = 5;
+
+            // Make the Y axis scale red
+            myPane.YAxis.Scale.FontSpec.FontColor = Color.Red;
+            myPane.YAxis.Title.FontSpec.FontColor = Color.Red;
+            // turn off the opposite tics so the Y tics don't show up on the Y2 axis
+            myPane.YAxis.MajorTic.IsOpposite = false;
+            myPane.YAxis.MinorTic.IsOpposite = false;
+            // Don't display the Y zero line
+            myPane.YAxis.MajorGrid.IsZeroLine = true;
+            // Align the Y axis labels so they are flush to the axis
+            myPane.YAxis.Scale.Align = AlignP.Inside;
+            // Manually set the axis range
+            //myPane.YAxis.Scale.Min = -1;
+            //myPane.YAxis.Scale.Max = 1;
+
+            // Fill the axis background with a gradient
+            myPane.Chart.Fill = new Fill(Color.White, Color.LightGray, 45.0f);
+
+            // Calculate the Axis Scale Ranges
+            zgc.AxisChange();
+
+        }
+        #endregion
+
+        #region TimerTicks
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            double time = (Environment.TickCount - tickStart) / 1000.0;
+
+            // Make sure that the curvelist has at least one curve
+            if (_zgPointer.GraphPane == null || _zgPointer.GraphPane.CurveList.Count <= 0)
+                return;
+
+            // Get the first CurveItem in the graph
+            LineItem curve = _zgPointer.GraphPane.CurveList[0] as LineItem;
+            if (curve == null)
+                return;
+
+            // Get the PointPairList
+            IPointListEdit list = curve.Points as IPointListEdit;
+            // If this is null, it means the reference at curve.Points does not
+            // support IPointListEdit, so we won't be able to modify it
+            if (list == null)
+                return;
+
+            // Time is measured in seconds
+            //double time = (Environment.TickCount - tickStart) / 1000.0;
+
+            // Keep the X scale at a rolling 30 second interval, with one
+            // major step between the max X value and the end of the axis
+            Scale xScale = _zgPointer.GraphPane.XAxis.Scale;
+            if (time > xScale.Max - xScale.MajorStep)
+            {
+                xScale.Max = time + xScale.MajorStep;
+                xScale.Min = xScale.Max - 10.0;
+            }
+
+            // Make sure the Y axis is rescaled to accommodate actual data
+            try
+            {
+                _zgPointer.AxisChange();
+            }
+            catch { }
+            // Force a redraw
+            _zgPointer.Invalidate();
+        }
+
+        private void timer2serial_Tick(object sender, EventArgs e)
+        {
+            //if (!MainV2.comPort.BaseStream.IsOpen && !MainV2.comPort.logreadmode)
+            //    return;
+
+            ////Console.WriteLine(DateTime.Now.Millisecond + " timer2 serial");
+            //try
+            //{
+            //    MainV2.comPort.MAV.cs.UpdateCurrentSettings(currentStateBindingSource);
+            //}
+            //catch { }
+
+            double time = (Environment.TickCount - tickStart) / 1000.0;
+
+            //Update Stick IMU
+                stickIMUList[0].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_ax);
+                stickIMUList[1].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_ay);
+                stickIMUList[2].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_az);
+                stickIMUList[3].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_gx);
+                stickIMUList[4].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_gy);
+                stickIMUList[5].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_gz);
+            //Update Rudder IMU
+                rudderIMUList[0].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_ax);
+                rudderIMUList[1].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_ay);
+                rudderIMUList[2].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_az);
+                rudderIMUList[3].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_gx);
+                rudderIMUList[4].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_gy);
+                rudderIMUList[5].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_gz);
+            //Update Crossbow IMU
+                if (_crossbowConnection != null && _crossbowConnection.IsOpen())
+                {
+                    AHRSDataPacket tmpData = _crossbowConnection.GetData();
+                    CrossbowIMUList[0].Add(time, tmpData.a_x);
+                    CrossbowIMUList[1].Add(time, tmpData.a_y);
+                    CrossbowIMUList[2].Add(time, tmpData.a_z);
+                    CrossbowIMUList[3].Add(time, tmpData.v_roll);
+                    CrossbowIMUList[4].Add(time, tmpData.v_pitch);
+                    CrossbowIMUList[5].Add(time, tmpData.v_yaw);
+                }
+            //Update String Pots
+                StringPotList[0].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_pot1);
+                StringPotList[1].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.stick_pot2);
+                StringPotList[2].Add(time, ArdupilotMega.MainV2.comPort.MAV.cs.rudder_pot);
+            
+        }
+        #endregion
+
+        #region Clear
+        private void ClearAllGraphs()
+        {
+            for (int i = 0; i < _graphList.Length; i++)
+            {
+                ClearGraph(i);
+            }
+        }
+
+        private void ClearGraph(int graph)
+        {
+            if (graph == 0) //Stick
+            {
+                foreach (RollingPointPairList list in stickIMUList)
+                {
+                    list.Clear();
+                }
+            }
+            else if (graph == 1)
+            {
+                foreach (RollingPointPairList list in rudderIMUList)
+                {
+                    list.Clear();
+                }
+            }
+            else if (graph == 2)
+            {
+                foreach (RollingPointPairList list in CrossbowIMUList)
+                {
+                    list.Clear();
+                }
+            }
+            else if (graph == 3)
+            {
+                foreach (RollingPointPairList list in StringPotList)
+                {
+                    list.Clear();
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_updateGraph)
+            {
+                //Change graph
+                _currentGraphNumber = tabControl1.SelectedIndex;
+                _zgPointer = _graphList[_currentGraphNumber];
+
+                // Sample at 20ms intervals
+                timer1.Interval = 100;
+                timer1.Enabled = true;
+                timer1.Start();
+
+                timer2serial.Interval = 50;
+                timer2serial.Enabled = true;
+                timer2serial.Start();
+            }
+            
+        }
+
+        private void GraphButton_Click(object sender, EventArgs e)
+        {
+            _updateGraph = !_updateGraph;
+
+            if (_updateGraph)
+            {
+                tabControl1.Enabled = true;
+                tabControl1_SelectedIndexChanged(sender, e);
+                GraphButton.Text = "Stop Graphs";
+            }
+            else
+            {
+                ClearAllGraphs();
+                tabControl1.Enabled = false;
+                timer1.Enabled = false;
+                timer2serial.Enabled = false;
+                GraphButton.Text = "Start Graphs";
+            }
+        }
+
+        private void Katana_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if (e.KeyChar == 'n' || e.KeyChar == 'N') 
+            if (e.KeyChar == 32) //Spacebar
+            {
+                _ManoeuvreMutex.WaitOne();
+                _manoeuvreNumber++;
+                _ManoeuvreMutex.ReleaseMutex();
+
+                ManoeuvreTextBox.Text = _manoeuvreNumber.ToString();
+            }
         }
     }
 
@@ -469,6 +827,11 @@ namespace ArdupilotMega.GCSViews
         #endregion //Connection
 
         #region Strings
+        public AHRSDataPacket GetData()
+        {
+            return m_data;
+        }
+
         public string GetCurrentData()
         {
             AHRSMutex.WaitOne();

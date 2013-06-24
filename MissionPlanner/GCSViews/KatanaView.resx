@@ -122,13 +122,91 @@
     <value>Top, Bottom, Right</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GraphButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 367</value>
+  </data>
+  <data name="GraphButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 23</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GraphButton.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="GraphButton.Text" xml:space="preserve">
+    <value>Start Graphs</value>
+  </data>
+  <data name="&gt;&gt;GraphButton.Name" xml:space="preserve">
+    <value>GraphButton</value>
+  </data>
+  <data name="&gt;&gt;GraphButton.Type" xml:space="preserve">
+    <value>ArdupilotMega.Controls.MyButton, ArdupilotMegaPlanner10, Version=1.1.4923.23586, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;GraphButton.Parent" xml:space="preserve">
+    <value>ActionPanel</value>
+  </data>
+  <data name="&gt;&gt;GraphButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ManoeuvreTextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="ManoeuvreTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 256</value>
+  </data>
+  <data name="ManoeuvreTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 23</value>
+  </data>
+  <data name="ManoeuvreTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="ManoeuvreTextBox.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ManoeuvreTextBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreTextBox.Name" xml:space="preserve">
+    <value>ManoeuvreTextBox</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreTextBox.Parent" xml:space="preserve">
+    <value>ActionPanel</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ManoeuvreButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 256</value>
+  </data>
+  <data name="ManoeuvreButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 23</value>
+  </data>
+  <data name="ManoeuvreButton.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="ManoeuvreButton.Text" xml:space="preserve">
+    <value>Next Manoeuvre</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreButton.Name" xml:space="preserve">
+    <value>ManoeuvreButton</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreButton.Type" xml:space="preserve">
+    <value>ArdupilotMega.Controls.MyButton, ArdupilotMegaPlanner10, Version=1.1.4923.23586, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreButton.Parent" xml:space="preserve">
+    <value>ActionPanel</value>
+  </data>
+  <data name="&gt;&gt;ManoeuvreButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="RecordButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>52, 171</value>
   </data>
   <data name="RecordButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 23</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="RecordButton.TabIndex" type="System.Int32, mscorlib">
     <value>54</value>
   </data>
@@ -139,13 +217,13 @@
     <value>RecordButton</value>
   </data>
   <data name="&gt;&gt;RecordButton.Type" xml:space="preserve">
-    <value>ArdupilotMega.Controls.MyButton, ArdupilotMegaPlanner10, Version=1.1.4918.32240, Culture=neutral, PublicKeyToken=null</value>
+    <value>ArdupilotMega.Controls.MyButton, ArdupilotMegaPlanner10, Version=1.1.4923.23586, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;RecordButton.Parent" xml:space="preserve">
     <value>ActionPanel</value>
   </data>
   <data name="&gt;&gt;RecordButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="myLabel1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 11pt</value>
@@ -166,13 +244,13 @@
     <value>myLabel1</value>
   </data>
   <data name="&gt;&gt;myLabel1.Type" xml:space="preserve">
-    <value>ArdupilotMega.Controls.MyLabel, ArdupilotMegaPlanner10, Version=1.1.4918.32240, Culture=neutral, PublicKeyToken=null</value>
+    <value>ArdupilotMega.Controls.MyLabel, ArdupilotMegaPlanner10, Version=1.1.4923.23586, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;myLabel1.Parent" xml:space="preserve">
     <value>ActionPanel</value>
   </data>
   <data name="&gt;&gt;myLabel1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="cmb_Connection.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 82</value>
@@ -193,7 +271,7 @@
     <value>ActionPanel</value>
   </data>
   <data name="&gt;&gt;cmb_Connection.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="cmb_Baud.Items" xml:space="preserve">
     <value>1200</value>
@@ -244,7 +322,7 @@
     <value>ActionPanel</value>
   </data>
   <data name="&gt;&gt;cmb_Baud.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="CrossbowConnectButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -265,13 +343,13 @@
     <value>CrossbowConnectButton</value>
   </data>
   <data name="&gt;&gt;CrossbowConnectButton.Type" xml:space="preserve">
-    <value>ArdupilotMega.Controls.MyButton, ArdupilotMegaPlanner10, Version=1.1.4918.32240, Culture=neutral, PublicKeyToken=null</value>
+    <value>ArdupilotMega.Controls.MyButton, ArdupilotMegaPlanner10, Version=1.1.4923.23586, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;CrossbowConnectButton.Parent" xml:space="preserve">
     <value>ActionPanel</value>
   </data>
   <data name="&gt;&gt;CrossbowConnectButton.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="ActionPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>808, 0</value>
@@ -298,8 +376,242 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ActionPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="zg1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="zg1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="zg1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>798, 429</value>
+  </data>
+  <data name="zg1.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="&gt;&gt;zg1.Name" xml:space="preserve">
+    <value>zg1</value>
+  </data>
+  <data name="&gt;&gt;zg1.Type" xml:space="preserve">
+    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.5.19081, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;zg1.Parent" xml:space="preserve">
+    <value>tabStickIMU</value>
+  </data>
+  <data name="&gt;&gt;zg1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="tabStickIMU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabStickIMU.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabStickIMU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 435</value>
+  </data>
+  <data name="tabStickIMU.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabStickIMU.Text" xml:space="preserve">
+    <value>Stick IMU</value>
+  </data>
+  <data name="&gt;&gt;tabStickIMU.Name" xml:space="preserve">
+    <value>tabStickIMU</value>
+  </data>
+  <data name="&gt;&gt;tabStickIMU.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabStickIMU.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabStickIMU.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="zg2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="zg2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="zg2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>798, 429</value>
+  </data>
+  <data name="zg2.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;zg2.Name" xml:space="preserve">
+    <value>zg2</value>
+  </data>
+  <data name="&gt;&gt;zg2.Type" xml:space="preserve">
+    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.5.19081, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;zg2.Parent" xml:space="preserve">
+    <value>tabRudderIMU</value>
+  </data>
+  <data name="&gt;&gt;zg2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabRudderIMU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabRudderIMU.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabRudderIMU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 435</value>
+  </data>
+  <data name="tabRudderIMU.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabRudderIMU.Text" xml:space="preserve">
+    <value>Rudder IMU</value>
+  </data>
+  <data name="&gt;&gt;tabRudderIMU.Name" xml:space="preserve">
+    <value>tabRudderIMU</value>
+  </data>
+  <data name="&gt;&gt;tabRudderIMU.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabRudderIMU.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabRudderIMU.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="zg3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="zg3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="zg3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 435</value>
+  </data>
+  <data name="zg3.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;zg3.Name" xml:space="preserve">
+    <value>zg3</value>
+  </data>
+  <data name="&gt;&gt;zg3.Type" xml:space="preserve">
+    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.5.19081, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;zg3.Parent" xml:space="preserve">
+    <value>tabCrossBow</value>
+  </data>
+  <data name="&gt;&gt;zg3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabCrossBow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabCrossBow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 435</value>
+  </data>
+  <data name="tabCrossBow.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tabCrossBow.Text" xml:space="preserve">
+    <value>Crossbow</value>
+  </data>
+  <data name="&gt;&gt;tabCrossBow.Name" xml:space="preserve">
+    <value>tabCrossBow</value>
+  </data>
+  <data name="&gt;&gt;tabCrossBow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabCrossBow.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabCrossBow.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="zg4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="zg4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="zg4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 435</value>
+  </data>
+  <data name="zg4.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;zg4.Name" xml:space="preserve">
+    <value>zg4</value>
+  </data>
+  <data name="&gt;&gt;zg4.Type" xml:space="preserve">
+    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.5.19081, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;zg4.Parent" xml:space="preserve">
+    <value>tabStringPots</value>
+  </data>
+  <data name="&gt;&gt;zg4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabStringPots.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabStringPots.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 435</value>
+  </data>
+  <data name="tabStringPots.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabStringPots.Text" xml:space="preserve">
+    <value>String Pots</value>
+  </data>
+  <data name="&gt;&gt;tabStringPots.Name" xml:space="preserve">
+    <value>tabStringPots</value>
+  </data>
+  <data name="&gt;&gt;tabStringPots.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabStringPots.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabStringPots.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabControl1.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>812, 461</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>416, 17</value>
+  </metadata>
+  <metadata name="currentStateBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>503, 17</value>
+  </metadata>
+  <metadata name="timer2serial.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>700, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -312,10 +624,28 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>1008, 461</value>
   </data>
+  <data name="&gt;&gt;timer1.Name" xml:space="preserve">
+    <value>timer1</value>
+  </data>
+  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;currentStateBindingSource.Name" xml:space="preserve">
+    <value>currentStateBindingSource</value>
+  </data>
+  <data name="&gt;&gt;currentStateBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timer2serial.Name" xml:space="preserve">
+    <value>timer2serial</value>
+  </data>
+  <data name="&gt;&gt;timer2serial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Katana</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MyUserControl, ArdupilotMegaPlanner10, Version=1.1.4918.32240, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.MyUserControl, ArdupilotMegaPlanner10, Version=1.1.4923.23586, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>
