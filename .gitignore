@@ -1,18 +1,18 @@
 # Katana Flight Testing Added Ignores
-#start by ignoring everything
-*
+#start by ignoring obvious things
+*.pfx
+*.suo
+*.user
+bin/
+obj/
+*.ino
+driver/
+resources/
+lib/
 
 #now add files want saved
 #ArduPlane
-!ArduPlane
-!.gitignore
-!mavlink_msg_raw_katana.h
+!ArduPlane.ino
 !KatanaSensors.*
-!ArduPlane.*
-!defines.h
 
 #MissionPlanner
-!MissionPlanner
-!CurrentState.cs
-!Mavlink
-!MAVLinkTypes.cs

@@ -1,0 +1,1 @@
+Project for adding tools to ArduPilot and Mission Planner for the purpose of recording flight data in Diamond DA20.  The source data for both of the above projects should be downloaded from github.com/diydrones

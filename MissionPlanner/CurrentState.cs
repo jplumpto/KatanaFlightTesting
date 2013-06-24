@@ -258,6 +258,41 @@ namespace ArdupilotMega
         [DisplayText("Rudder Pot")]
         public float rudder_pot { get; set; }
 
+        //KatanaFlightTesting logging data
+        public string KatanaFlightTestFormat()
+        {
+            string format = GetNameandUnit("lat") + ", " + GetNameandUnit("lng") + ", " + GetNameandUnit("alt") + ", "
+                + GetNameandUnit("airspeed") + ", " + GetNameandUnit("groundspeed") + ", "
+                + GetNameandUnit("roll") + ", " + GetNameandUnit("pitch") + ", " + GetNameandUnit("yaw") + ", "
+                + GetNameandUnit("ax") + ", " + GetNameandUnit("ay") + ", " + GetNameandUnit("az") + ", "
+                + GetNameandUnit("gx") + ", " + GetNameandUnit("gy") + ", " + GetNameandUnit("gz") + ", "
+                + GetNameandUnit("mx") + ", " + GetNameandUnit("my") + ", " + GetNameandUnit("mz") + ", "
+                + GetNameandUnit("stick_ax") + ", " + GetNameandUnit("stick_ay") + ", " + GetNameandUnit("stick_az") + ", "
+                + GetNameandUnit("stick_gx") + ", " + GetNameandUnit("stick_gy") + ", " + GetNameandUnit("stick_gz") + ", "
+                + GetNameandUnit("stick_mx") + ", " + GetNameandUnit("stick_my") + ", " + GetNameandUnit("stick_mz") + ", "
+                + GetNameandUnit("rudder_ax") + ", " + GetNameandUnit("rudder_ay") + ", " + GetNameandUnit("rudder_az") + ", "
+                + GetNameandUnit("rudder_gx") + ", " + GetNameandUnit("rudder_gy") + ", " + GetNameandUnit("rudder_gz") + ", "
+                + GetNameandUnit("rudder_mx") + ", " + GetNameandUnit("rudder_my") + ", " + GetNameandUnit("rudder_mz") + ", "
+                + GetNameandUnit("stick_pot1") + ", " + GetNameandUnit("stick_pot2") + ", " + GetNameandUnit("rudder_pot");
+            return format;
+        }
+        public string KatanaFlightTestData()
+        {
+            string data = lat.ToString() + ", " + lng.ToString() + ", " + alt.ToString() + ", "
+                + airspeed.ToString() + ", " + groundspeed.ToString() + ", "
+                + roll.ToString() + ", " + pitch.ToString() + ", " + yaw.ToString() + ", "
+                + ax.ToString() + ", " + ay.ToString() + ", " + az.ToString() + ", "
+                + gx.ToString() + ", " + gy.ToString() + ", " + gz.ToString() + ", "
+                + mx.ToString() + ", " + my.ToString() + ", " + mz.ToString() + ", "
+                + stick_ax.ToString() + ", " + stick_ay.ToString() + ", " + stick_az.ToString() + ", "
+                + stick_gx.ToString() + ", " + stick_gy.ToString() + ", " + stick_gz.ToString() + ", "
+                + stick_mx.ToString() + ", " + stick_my.ToString() + ", " + stick_mz.ToString() + ", "
+                + rudder_ax.ToString() + ", " + rudder_ay.ToString() + ", " + rudder_az.ToString() + ", "
+                + rudder_gx.ToString() + ", " + rudder_gy.ToString() + ", " + rudder_gz.ToString() + ", "
+                + rudder_mx.ToString() + ", " + rudder_my.ToString() + ", " + rudder_mz.ToString() + ", "
+                + stick_pot1.ToString() + ", " + stick_pot1.ToString() + ", " + rudder_pot.ToString();
+            return data;
+        }
 
 
         /// <summary>

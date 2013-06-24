@@ -654,21 +654,21 @@ AP_Mount camera_mount2(&current_loc, g_gps, &ahrs, 1);
  */
 static const AP_Scheduler::Task scheduler_tasks[] PROGMEM = {
     { update_GPS,             5,   2500 },
-    { navigate,               5,   4800 },
+//    { navigate,               5,   4800 },
     { update_compass,         5,   1500 },
     { read_airspeed,          5,   1500 },
     { read_control_switch,   15,   1000 },
     { update_alt,             5,   3000 },
     { calc_altitude_error,    5,   1000 },
     { update_commands,        5,   7000 },
-    { update_mount,           2,   1500 },
+//    { update_mount,           2,   1500 },
     { obc_fs_check,           5,   1000 },
     { update_events,		 15,   1500 },
     { check_usb_mux,          5,   1000 },
-    { read_battery,           5,   1000 },
+//    { read_battery,           5,   1000 },
     { one_second_loop,       50,   3000 },
     { update_logging,         5,   1000 },
-    { read_receiver_rssi,     5,   1000 },
+//    { read_receiver_rssi,     5,   1000 },
     { check_long_failsafe,   15,   1000 },
 };
 
@@ -693,7 +693,7 @@ void setup() {
     batt_curr_pin = hal.analogin->channel(g.battery_curr_pin);
     
     init_ardupilot();
-	h_katana.init();
+	h_katana.init(hal.analogin);
 
     // initialise the main loop scheduler
     scheduler.init(&scheduler_tasks[0], sizeof(scheduler_tasks)/sizeof(scheduler_tasks[0]));
@@ -739,7 +739,7 @@ static void fast_loop()
 
     // Read radio
     // ----------
-    read_radio();
+    //read_radio();
 
     // try to send any deferred messages if the serial port now has
     // some space available
@@ -777,12 +777,12 @@ static void fast_loop()
 
     // apply desired roll, pitch and yaw to the plane
     // ----------------------------------------------
-    if (control_mode > MANUAL)
-        stabilize();
+    //if (control_mode > MANUAL)
+     //   stabilize();
 
     // write out the servo PWM values
     // ------------------------------
-    set_servos();
+    //set_servos();
 
     gcs_update();
     gcs_data_stream_send();

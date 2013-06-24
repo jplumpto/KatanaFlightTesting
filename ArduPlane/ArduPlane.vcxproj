@@ -66,64 +66,64 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ArduPlane.pde">
+    <None Include="ArduPlane.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="Attitude.pde">
+    <None Include="Attitude.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="climb_rate.pde">
+    <None Include="climb_rate.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="commands.pde">
+    <None Include="commands.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="commands_logic.pde">
+    <None Include="commands_logic.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="commands_process.pde">
+    <None Include="commands_process.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="compat.pde">
+    <None Include="compat.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="control_modes.pde">
+    <None Include="control_modes.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="events.pde">
+    <None Include="events.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="failsafe.pde">
+    <None Include="failsafe.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="GCS_Mavlink.pde">
+    <None Include="GCS_Mavlink.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="geofence.pde">
+    <None Include="geofence.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="Log.pde">
+    <None Include="Log.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="navigation.pde">
+    <None Include="navigation.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="Parameters.pde">
+    <None Include="Parameters.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="radio.pde">
+    <None Include="radio.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="sensors.pde">
+    <None Include="sensors.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="setup.pde">
+    <None Include="setup.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="system.pde">
+    <None Include="system.ino">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="test.pde">
+    <None Include="test.ino">
       <FileType>CppCode</FileType>
     </None>
   </ItemGroup>

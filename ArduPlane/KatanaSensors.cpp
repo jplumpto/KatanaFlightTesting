@@ -26,13 +26,20 @@ KatanaSensors::KatanaSensors(bool connect)
 
 }
 
-void KatanaSensors::init()
+void KatanaSensors::init(AP_HAL::AnalogIn* analogin)
 {
-
+	stick_pot1_pin = analogin->channel(3);
+	stick_pot1_pin->set_pin(3);
 }
 
 	
 bool KatanaSensors::update()
 {
+	update_string_pots();
 	return false;
+}
+
+void KatanaSensors::update_string_pots()
+{
+	_stick_pot1 = stick_pot1_pin->read_latest();
 }

@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include <stdint.h>
+#include "AnalogIn.h"
 
 
 class KatanaSensors
@@ -10,7 +11,7 @@ class KatanaSensors
 public:
 	KatanaSensors(bool connect);
 	
-	void init();
+	void init(AP_HAL::AnalogIn* analogin);
 	bool update();
 	int16_t stick_xacc(){ return	_stick_xacc;	}	 ///< X acceleration (raw)
 	int16_t stick_yacc(){ return	_stick_yacc;	}	 ///< Y acceleration (raw)
@@ -36,6 +37,8 @@ public:
 
 
 private:
+	AP_HAL::AnalogSource * stick_pot1_pin;
+
 	int16_t _stick_xacc; ///< X acceleration (raw)
 	int16_t _stick_yacc; ///< Y acceleration (raw)
 	int16_t _stick_zacc; ///< Z acceleration (raw)
@@ -57,6 +60,8 @@ private:
 	int16_t _stick_pot1; ///< Stick deflection pot 1 (raw)
 	int16_t _stick_pot2; ///< Stick deflection pot 2 (raw)
 	int16_t _rudder_pot; ///< Rudder deflection pot (raw)
+
+	void update_string_pots();
 };
 
 
