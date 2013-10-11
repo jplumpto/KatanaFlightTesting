@@ -157,6 +157,23 @@ DataFlash_Empty DataFlash;
 // Added Kanata Flight Sensors
 static KatanaSensors	h_katana(true);
 
+struct IMUDataStructure{
+	//Gyros
+	int xGyro;
+	int yGyro;
+	int zGyro;
+
+	//Accels
+	int xAcc;
+	int yAcc;
+	int zAcc;
+
+	//Mag
+	int xMag;
+	int yMag;
+	int zMag;
+}; //IMUDataStructure
+
 // All GPS access should be through this pointer.
 static GPS         *g_gps;
 
@@ -667,6 +684,7 @@ static const AP_Scheduler::Task scheduler_tasks[] PROGMEM = {
     { check_usb_mux,          5,   1000 },
 //    { read_battery,           5,   1000 },
     { one_second_loop,       50,   3000 },
+//    { update_katana,        200,   1000 },
     { update_logging,         5,   1000 },
 //    { read_receiver_rssi,     5,   1000 },
     { check_long_failsafe,   15,   1000 },
@@ -693,7 +711,8 @@ void setup() {
     batt_curr_pin = hal.analogin->channel(g.battery_curr_pin);
     
     init_ardupilot();
-	h_katana.init(hal.analogin);
+    h_katana.init(hal.analogin);
+    //hal.i2c->begin();
 
     // initialise the main loop scheduler
     scheduler.init(&scheduler_tasks[0], sizeof(scheduler_tasks)/sizeof(scheduler_tasks[0]));
@@ -755,7 +774,8 @@ static void fast_loop()
 #endif
 
     ahrs.update();
-	h_katana.update();
+    h_katana.update();
+    //update_katana();
 
     if (g.log_bitmask & MASK_LOG_ATTITUDE_FAST)
         Log_Write_Attitude();
@@ -907,6 +927,7 @@ static void one_second_loop()
         }
         counter = 0;
     }
+    
 }
 
 /*
@@ -971,6 +992,19 @@ static void update_GPS(void)
     }
 
     calc_gndspeed_undershoot();
+}
+
+static void update_katana(void)
+{
+  uint8_t dataI2C[128];
+  uint8_t nbstruct = sizeof(IMUDataStructure);
+  int stat = hal.i2c->read((uint8_t)0x05,nbstruct,dataI2C);
+  if(stat !=0)
+  {
+    ((IMUDataStructure *) dataI2C)->xAcc = 6000;
+  }
+  h_katana.set_stick_IMU_data(dataI2C);
+  
 }
 
 static void update_current_flight_mode(void)

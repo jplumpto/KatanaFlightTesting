@@ -36,6 +36,7 @@ static void obc_fs_check(void);
 static void update_aux(void);
 static void one_second_loop();
 static void update_GPS(void);
+static void update_katana(void);
 static void update_current_flight_mode(void);
 static void update_navigation();
 static void update_alt();

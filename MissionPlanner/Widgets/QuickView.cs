@@ -30,7 +30,7 @@ namespace ArdupilotMega.Widgets
         [System.ComponentModel.Browsable(true)]
         public double number { get { return double.Parse(labelWithPseudoOpacity2.Text); } 
             set { 
-                string ans = (value).ToString("0.00");
+                string ans = (value).ToString("0.000");
                 if (labelWithPseudoOpacity2.Text == ans) 
                     return;
                 labelWithPseudoOpacity2.Text = ans;

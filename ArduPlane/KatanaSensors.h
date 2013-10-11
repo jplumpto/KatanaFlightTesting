@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include "AnalogIn.h"
 
-
 class KatanaSensors
 {
 public:
@@ -35,9 +34,31 @@ public:
 	int16_t stick_pot2(){ return	_stick_pot2;	}	 ///< Stick deflection pot 2 (raw)
 	int16_t rudder_pot(){ return	_rudder_pot;	}	 ///< Rudder deflection pot (raw)
 
-
+        void set_rudder_IMU_data(uint8_t *data);
+        void set_stick_IMU_data(uint8_t *data);
 private:
+	struct IMUDataStructure{
+		//Gyros
+		int xGyro;
+		int yGyro;
+		int zGyro;
+
+		//Accels
+		int xAcc;
+		int yAcc;
+		int zAcc;
+
+		//Mag
+		int xMag;
+		int yMag;
+		int zMag;
+	}; //IMUDataStructure
+
+	int nbstruct;
+
 	AP_HAL::AnalogSource * stick_pot1_pin;
+	AP_HAL::AnalogSource * stick_pot2_pin;
+	AP_HAL::AnalogSource * rudder_pot_pin;
 
 	int16_t _stick_xacc; ///< X acceleration (raw)
 	int16_t _stick_yacc; ///< Y acceleration (raw)
@@ -62,6 +83,8 @@ private:
 	int16_t _rudder_pot; ///< Rudder deflection pot (raw)
 
 	void update_string_pots();
+	void update_imus();
+
 };
 
 

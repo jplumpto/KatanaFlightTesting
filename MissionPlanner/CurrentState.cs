@@ -209,18 +209,18 @@ namespace ArdupilotMega
 
         // KatanaFlightTesting Sensors
         // stick accel
-        [DisplayText("Stick Accel X")]
+        [DisplayText("Stick Accel X (m/s/s)")]
         public float stick_ax { get; set; }
-        [DisplayText("Stick Accel Y")]
+        [DisplayText("Stick Accel Y (m/s/s)")]
         public float stick_ay { get; set; }
-        [DisplayText("Stick Accel Z")]
+        [DisplayText("Stick Accel Z (m/s/s)")]
         public float stick_az { get; set; }
         // stick gyro
-        [DisplayText("Stick Gyro X")]
+        [DisplayText("Stick Gyro X (rad/s)")]
         public float stick_gx { get; set; }
-        [DisplayText("Stick Gyro Y")]
+        [DisplayText("Stick Gyro Y (rad/s)")]
         public float stick_gy { get; set; }
-        [DisplayText("Stick Gyro Z")]
+        [DisplayText("Stick Gyro Z (rad/s)")]
         public float stick_gz { get; set; }
         // stick mag
         [DisplayText("Stick Mag X")]
@@ -230,18 +230,18 @@ namespace ArdupilotMega
         [DisplayText("Stick Mag Z")]
         public float stick_mz { get; set; }
         // rudder accel
-        [DisplayText("Rudder Accel X")]
+        [DisplayText("Rudder Accel X (m/s/s)")]
         public float rudder_ax { get; set; }
-        [DisplayText("Rudder Accel Y")]
+        [DisplayText("Rudder Accel Y (m/s/s)")]
         public float rudder_ay { get; set; }
-        [DisplayText("Rudder Accel Z")]
+        [DisplayText("Rudder Accel Z (m/s/s)")]
         public float rudder_az { get; set; }
         // rudder gyro
-        [DisplayText("Rudder Gyro X")]
+        [DisplayText("Rudder Gyro X (rad/s)")]
         public float rudder_gx { get; set; }
-        [DisplayText("Rudder Gyro Y")]
+        [DisplayText("Rudder Gyro Y (rad/s)")]
         public float rudder_gy { get; set; }
-        [DisplayText("Rudder Gyro Z")]
+        [DisplayText("Rudder Gyro Z (rad/s)")]
         public float rudder_gz { get; set; }
         // rudder mag
         [DisplayText("Rudder Mag X")]
@@ -258,6 +258,24 @@ namespace ArdupilotMega
         [DisplayText("Rudder Pot")]
         public float rudder_pot { get; set; }
 
+        private const int IMU_GRAVITY = 4096;
+        public float KatanaIMUAccel(short value)
+        {
+            return value * 9.80665f / IMU_GRAVITY;
+        }
+
+        private const float IMU_GYRO_GAIN = 0.0609f; // ( 0.0609 => 1/16.4LSB/deg/s at 2000deg/s)
+        public float KatanaIMUGyro(short value)
+        {
+            return IMU_GYRO_GAIN * deg2rad * value;
+        }
+
+        public string KatanaStringPots()
+        {
+            string data = stick_pot1.ToString() + ", " + stick_pot2.ToString() + ", " + rudder_pot.ToString();
+            return data;
+        }
+
         //KatanaFlightTesting logging data
         public string KatanaFlightTestFormat()
         {
@@ -267,12 +285,12 @@ namespace ArdupilotMega
                 + GetNameandUnit("ax") + ", " + GetNameandUnit("ay") + ", " + GetNameandUnit("az") + ", "
                 + GetNameandUnit("gx") + ", " + GetNameandUnit("gy") + ", " + GetNameandUnit("gz") + ", "
                 + GetNameandUnit("mx") + ", " + GetNameandUnit("my") + ", " + GetNameandUnit("mz") + ", "
-                + GetNameandUnit("stick_ax") + ", " + GetNameandUnit("stick_ay") + ", " + GetNameandUnit("stick_az") + ", "
-                + GetNameandUnit("stick_gx") + ", " + GetNameandUnit("stick_gy") + ", " + GetNameandUnit("stick_gz") + ", "
-                + GetNameandUnit("stick_mx") + ", " + GetNameandUnit("stick_my") + ", " + GetNameandUnit("stick_mz") + ", "
-                + GetNameandUnit("rudder_ax") + ", " + GetNameandUnit("rudder_ay") + ", " + GetNameandUnit("rudder_az") + ", "
-                + GetNameandUnit("rudder_gx") + ", " + GetNameandUnit("rudder_gy") + ", " + GetNameandUnit("rudder_gz") + ", "
-                + GetNameandUnit("rudder_mx") + ", " + GetNameandUnit("rudder_my") + ", " + GetNameandUnit("rudder_mz") + ", "
+                //+ GetNameandUnit("stick_ax") + ", " + GetNameandUnit("stick_ay") + ", " + GetNameandUnit("stick_az") + ", "
+                //+ GetNameandUnit("stick_gx") + ", " + GetNameandUnit("stick_gy") + ", " + GetNameandUnit("stick_gz") + ", "
+                //+ GetNameandUnit("stick_mx") + ", " + GetNameandUnit("stick_my") + ", " + GetNameandUnit("stick_mz") + ", "
+                //+ GetNameandUnit("rudder_ax") + ", " + GetNameandUnit("rudder_ay") + ", " + GetNameandUnit("rudder_az") + ", "
+                //+ GetNameandUnit("rudder_gx") + ", " + GetNameandUnit("rudder_gy") + ", " + GetNameandUnit("rudder_gz") + ", "
+                //+ GetNameandUnit("rudder_mx") + ", " + GetNameandUnit("rudder_my") + ", " + GetNameandUnit("rudder_mz") + ", "
                 + GetNameandUnit("stick_pot1") + ", " + GetNameandUnit("stick_pot2") + ", " + GetNameandUnit("rudder_pot");
             return format;
         }
@@ -284,13 +302,13 @@ namespace ArdupilotMega
                 + ax.ToString() + ", " + ay.ToString() + ", " + az.ToString() + ", "
                 + gx.ToString() + ", " + gy.ToString() + ", " + gz.ToString() + ", "
                 + mx.ToString() + ", " + my.ToString() + ", " + mz.ToString() + ", "
-                + stick_ax.ToString() + ", " + stick_ay.ToString() + ", " + stick_az.ToString() + ", "
-                + stick_gx.ToString() + ", " + stick_gy.ToString() + ", " + stick_gz.ToString() + ", "
-                + stick_mx.ToString() + ", " + stick_my.ToString() + ", " + stick_mz.ToString() + ", "
-                + rudder_ax.ToString() + ", " + rudder_ay.ToString() + ", " + rudder_az.ToString() + ", "
-                + rudder_gx.ToString() + ", " + rudder_gy.ToString() + ", " + rudder_gz.ToString() + ", "
-                + rudder_mx.ToString() + ", " + rudder_my.ToString() + ", " + rudder_mz.ToString() + ", "
-                + stick_pot1.ToString() + ", " + stick_pot1.ToString() + ", " + rudder_pot.ToString();
+                //+ stick_ax.ToString() + ", " + stick_ay.ToString() + ", " + stick_az.ToString() + ", "
+                //+ stick_gx.ToString() + ", " + stick_gy.ToString() + ", " + stick_gz.ToString() + ", "
+                //+ stick_mx.ToString() + ", " + stick_my.ToString() + ", " + stick_mz.ToString() + ", "
+                //+ rudder_ax.ToString() + ", " + rudder_ay.ToString() + ", " + rudder_az.ToString() + ", "
+                //+ rudder_gx.ToString() + ", " + rudder_gy.ToString() + ", " + rudder_gz.ToString() + ", "
+                //+ rudder_mx.ToString() + ", " + rudder_my.ToString() + ", " + rudder_mz.ToString() + ", "
+                + stick_pot1.ToString() + ", " + stick_pot2.ToString() + ", " + rudder_pot.ToString();
             return data;
         }
 
@@ -989,21 +1007,41 @@ enum gcs_severity {
                     {
                         var katana = bytearray.ByteArrayToStructure<MAVLink.mavlink_raw_katana_t>(6);
 
-                        stick_ax = katana.stick_xacc;
-                        stick_ay = katana.stick_yacc;
-                        stick_az = katana.stick_zacc;
-                        stick_gx = katana.stick_xgyro;
-                        stick_gy = katana.stick_ygyro;
-                        stick_gz = katana.stick_zgyro;
+                        #region Integers
+                        //stick_ax = katana.stick_xacc;
+                        //stick_ay = katana.stick_yacc;
+                        //stick_az = katana.stick_zacc;
+                        //stick_gx = katana.stick_xgyro;
+                        //stick_gy = katana.stick_ygyro;
+                        //stick_gz = katana.stick_zgyro;
+                        //stick_mx = katana.stick_xmag;
+                        //stick_my = katana.stick_ymag;
+                        //stick_mz = katana.stick_zmag;
+                        //rudder_ax = katana.rudder_xacc;
+                        //rudder_ay = katana.rudder_yacc;
+                        //rudder_az = katana.rudder_zacc;
+                        //rudder_gx = katana.rudder_xgyro;
+                        //rudder_gy = katana.rudder_ygyro;
+                        //rudder_gz = katana.rudder_zgyro;
+                        //rudder_mx = katana.rudder_xmag;
+                        //rudder_my = katana.rudder_ymag;
+                        //rudder_mz = katana.rudder_zmag;
+                        #endregion
+                        stick_ax = KatanaIMUAccel(katana.stick_xacc);
+                        stick_ay = KatanaIMUAccel(katana.stick_yacc);
+                        stick_az = KatanaIMUAccel(katana.stick_zacc);
+                        stick_gx = KatanaIMUGyro(katana.stick_xgyro);
+                        stick_gy = KatanaIMUGyro(katana.stick_ygyro);
+                        stick_gz = KatanaIMUGyro(katana.stick_zgyro);
                         stick_mx = katana.stick_xmag;
                         stick_my = katana.stick_ymag;
                         stick_mz = katana.stick_zmag;
-                        rudder_ax = katana.rudder_xacc;
-                        rudder_ay = katana.rudder_yacc;
-                        rudder_az = katana.rudder_zacc;
-                        rudder_gx = katana.rudder_xgyro;
-                        rudder_gy = katana.rudder_ygyro;
-                        rudder_gz = katana.rudder_zgyro;
+                        rudder_ax = KatanaIMUAccel(katana.rudder_xacc);
+                        rudder_ay = KatanaIMUAccel(katana.rudder_yacc);
+                        rudder_az = KatanaIMUAccel(katana.rudder_zacc);
+                        rudder_gx = KatanaIMUGyro(katana.rudder_xgyro);
+                        rudder_gy = KatanaIMUGyro(katana.rudder_ygyro);
+                        rudder_gz = KatanaIMUGyro(katana.rudder_zgyro);
                         rudder_mx = katana.rudder_xmag;
                         rudder_my = katana.rudder_ymag;
                         rudder_mz = katana.rudder_zmag;
